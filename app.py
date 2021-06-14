@@ -20,8 +20,8 @@ def index():
                 line = line.replace('\n','')
                 if(wallet_address.lower()==line):
                     print(wallet_address.split(), line.split())
-                    return render_template("index.html", form=form, wallet_address=wallet_address)
-            return render_template("index.html", form=form, wallet_address="")
+                    return render_template("airdrop-confirmation.html")
+            return render_template("sorry.html")
 
     return render_template("index.html", form=form)
 

@@ -17,18 +17,4 @@
 	</center>
 </form>
 
-{% if wallet_address %}
-  <center>
-    <img style="height:10%;width:10%" src="{{ url_for('static',filename='images/yayy.png')}}">
-
-    <h1>Congratulations!! You're wallet address has been whitelisted for the airdrop! ;)</h1>
-  </center>
-{% else %}
-	<center>
-    <img style="height:10%;width:10%" src="{{ url_for('static',filename='images/oops.jpeg')}}">
-    <h1>Sorry, but we couldn't find anyone with the given address.<br/> Try searching again and check if you have entered the right wallet address.</h1>
-
-	</center>
-
-{% endif %}
 {% endblock %}
