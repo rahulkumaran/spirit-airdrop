@@ -1,0 +1,34 @@
+
+{% block body %}
+<img style="height:9.5%;width:15%" src="{{ url_for('static',filename='images/spirit.png')}}">
+<img style="height:10%;width:10%" src="{{ url_for('static',filename='images/yel.png')}}">
+
+<center><h1>Curious to find out if you're a part of the <a href="https://yel.finance">YEL Finance</a> And <a href="https://spiritswap.finance">SpiritSwap</a> Airdrop?</h1></center>
+<center><h2>Search If Your Wallet Address Has Been Whitelisted For The Airdrop</h2></center>
+<form action="" method="post">
+	{{ form.csrf }}
+	<center>
+		<div class="input text">
+			{{ form.wallet.label }} <br> {{ form.wallet }} <br/><br/>
+		</div>
+		<div class="input submit">
+			<input type="submit" value="Submit" />
+		</div>
+	</center>
+</form>
+
+{% if wallet_address %}
+  <center>
+    <img style="height:10%;width:10%" src="{{ url_for('static',filename='images/yayy.png')}}">
+
+    <h1>Congratulations!! You're wallet address has been whitelisted for the airdrop! ;)</h1>
+  </center>
+{% else %}
+	<center>
+    <img style="height:10%;width:10%" src="{{ url_for('static',filename='images/oops.jpeg')}}">
+    <h1>Sorry, but we couldn't find anyone with the given address.<br/> Try searching again and check if you have entered the right wallet address.</h1>
+
+	</center>
+
+{% endif %}
+{% endblock %}
