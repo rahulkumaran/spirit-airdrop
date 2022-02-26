@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from forms import *
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-
+import pandas as pd
 
 DEBUG = True
 app = Flask(__name__)	#initialising flask
@@ -13,17 +13,18 @@ def index():
     form = WalletForm(request.form)
     if(request.method == 'POST'):		#If the user submits data in the Form
         if(form.validate()):		#If form is validated
-            wallet_address = request.form['wallet']
+            data = pd.read_csv("c_airdrop.csv")
+            wallet_address = request.form['wallet'].lower()
             print(wallet_address.lower())
-            addresses = open('address.txt','r')
-            for line in addresses:
-                line = line.replace('\n','')
-                if(wallet_address.lower()==line):
-                    print(wallet_address.split(), line.split())
-                    return render_template("airdrop-confirmation.html")
-            return render_template("sorry.html")
+            addresses = data['Address'].values.tolist()
+            end_votes = data['End votes'].values.tolist()
+            payout = data['CRE8R Payout'].values.tolist()
+            if(wallet_address in addresses):
+                return render_template("airdrop-confirmation.html", end_votes = end_votes[addresses.index(wallet_address)], payout = payout[addresses.index(wallet_address)])
+            else:
+                return render_template("sorry.html")
 
     return render_template("index.html", form=form)
 
 if(__name__ == "__main__"):
-	app.run(host="localhost", port=5000)
+	app.run(host="localhost", port=8888)
