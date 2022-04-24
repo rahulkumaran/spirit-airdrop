@@ -13,18 +13,18 @@ def index():
     form = WalletForm(request.form)
     if(request.method == 'POST'):		#If the user submits data in the Form
         if(form.validate()):		#If form is validated
-            data = pd.read_csv("c_airdrop.csv")
+            data = pd.read_csv("inSPIRIT.csv")
             wallet_address = request.form['wallet'].lower()
             print(wallet_address.lower())
             addresses = data['Address'].values.tolist()
-            end_votes = data['End votes'].values.tolist()
-            payout = data['CRE8R Payout'].values.tolist()
+            #end_votes = data['End votes'].values.tolist()
+            #payout = data['CRE8R Payout'].values.tolist()
             if(wallet_address in addresses):
-                return render_template("airdrop-confirmation.html", end_votes = end_votes[addresses.index(wallet_address)], payout = payout[addresses.index(wallet_address)])
+                return render_template("airdrop-confirmation.html")#end_votes = end_votes[addresses.index(wallet_address)], payout = payout[addresses.index(wallet_address)])
             else:
                 return render_template("sorry.html")
 
     return render_template("index.html", form=form)
 
 if(__name__ == "__main__"):
-	app.run(host="localhost", port=8888)
+	app.run(host="localhost", port=7777)
