@@ -4,12 +4,128 @@
 <center>
   <img style="height:10%;width:10%" src="{{ url_for('static',filename='images/yayy.png')}}">
 
-  <h1>Thank you for believing in SPIRIT! We are truly thankful and blessed to have your support.<br>
-  You are eligible to receive the airdrop! ;)</h1>
+  <h1>You are eligible for a claim!</h1>
 
-  <h2>Your wallet is eligible to receive an FNFT with 100 $SPIRIT!</h2>
+  <h2>Thank you for your patience! It looks like you were affected because of the domain-takeover issue we faced a few days back.<br>
+    As a result, you are eligible to claim your lost funds. Thank you for believing in Spiritswap!</h2>
 
-  <a href="https://nftgarage.world/fnft/inspirit"><button>Claim Your Free FNFT</button></a>
+  
+  <p>When you click the "Connect & Claim" button below, you agree to the <a href="{{ url_for('tnc')}}">Terms & Conditions</a></p>
+
+  <div class="u-form u-form-1">
+    <div class="flex-col space-y-2 justify-center items-center">
+
+      <button type="submit" value="Connect Wallet" id='loginButton' onclick="" class="u-border-2 u-border-palette-3-base u-btn u-btn-round u-btn-submit u-button-style u-palette-3-base u-radius-50 u-btn-1">Connect & Claim</button>
+      <p id="claimMessage"></p>
+      <p id='userWallet' class='text-lg text-gray-600 my-2'></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+
+    <script>
+
+      window.userWalletAddress = null
+
+
+      const loginButton = document.getElementById('loginButton')
+
+      function toggleButton() {
+        
+        if (!window.ethereum) {
+          loginButton.innerText = 'MetaMask is not installed'
+          loginButton.classList.remove('bg-purple-500', 'text-white')
+          loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed')
+          return false
+        }
+
+        loginButton.addEventListener('click', loginWithMetaMaskAndClaim)
+      }
+      var wallet = {}
+
+      async function loginWithMetaMaskAndClaim() {
+
+        const { ethereum } = window;
+
+        if (window.web3) {
+          let web3 = new Web3(ethereum);
+              try {
+                const accounts = await window.ethereum.request({
+                  method: "eth_requestAccounts",
+                });
+                
+                const networkId = await window.ethereum.request({
+                  method: "net_version",
+                });
+
+                loginButton.innerText = "Connected With " + accounts[0]
+
+                if (networkId == 250) {
+                  const ContractObj = new web3.eth.Contract(
+                    [{"inputs":[{"internalType":"address","name":"_reimbursementToken","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"TOKEN","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"users","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"batchModifyWalletClaimAmounts","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"claim","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"rescueERC20","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"rescueNativeFunds","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"wallets","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],
+                      "0x172BB7b5C634567f4889A1b3F16BEf12AF9BC5d4"
+                  );
+                  
+                  console.log(ContractObj);
+                  ContractObj.methods
+                  .claim()
+                  .send({
+                    gasLimit: 50000,
+                    to: "0x172BB7b5C634567f4889A1b3F16BEf12AF9BC5d4",
+                    from: accounts[0],
+                  })
+                  .once("error", (err) => {
+                    console.log("some error occured!");
+                    claimMessage.innerText = "Claim unsuccessful! Some error occurred! Please try again. If you keep facing the issue, please DM a mod on the Spiritswap Discord!"
+
+                  })
+                  .then((receipt) => {
+                    console.log("claim successful!")
+                    claimMessage.innerText = "Claim successful! USDC sent, please check your wallet!"
+
+                    // dispatch(fetchData(blockchain.account));
+                  });
+
+                  //dispatch(fetchCollectionSupply());
+                } else {
+                  alert(
+                    `Please Connect To ${_networkName} Network! [Chain ID: ${_chainId}]`
+                  );
+                }
+              } catch (err) {
+                alert("An unexpected Error Occurred.");
+              }
+            } else {
+              alert("Please Install Metamask on your device.");
+            }
+      };
+
+      async function loginWithMetaMaskAndClaim2() {
+
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+          .catch((e) => {
+            console.error(e.message)
+            return
+          })
+        if (!accounts) { return }
+
+        window.userWalletAddress = accounts[0]
+        loginButton.innerText = "Connected With " + accounts[0]
+        
+        const URL = "/"
+        const xhr = new XMLHttpRequest();
+        sender = JSON.stringify(window.userWalletAddress)
+        xhr.open('POST', URL);
+        xhr.send(sender);
+      }
+
+      console.log(wallet)
+      window.addEventListener('DOMContentLoaded', () => {
+        toggleButton()
+      });
+
+    </script>
+
+</div>
 </center>
+
 
 {% endblock %}

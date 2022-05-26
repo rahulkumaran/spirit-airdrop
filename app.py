@@ -8,6 +8,7 @@ app = Flask(__name__)	#initialising flask
 app.config.from_object(__name__)	#configuring flask
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
+    
 @app.route("/", methods=['GET', 'POST'])
 def index():
     form = WalletForm(request.form)
@@ -26,5 +27,10 @@ def index():
 
     return render_template("index.html", form=form)
 
+@app.route("/tnc", methods=['GET'])
+def tnc():
+    return render_template("tnc.html")
+
+
 if(__name__ == "__main__"):
-	app.run()
+	app.run(port=8000)
