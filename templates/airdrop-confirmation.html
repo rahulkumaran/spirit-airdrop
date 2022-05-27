@@ -61,15 +61,15 @@
                 if (networkId == 250) {
                   const ContractObj = new web3.eth.Contract(
                     [{"inputs":[{"internalType":"address","name":"_reimbursementToken","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"inputs":[],"name":"TOKEN","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address[]","name":"users","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"batchModifyWalletClaimAmounts","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"claim","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"token","type":"address"}],"name":"rescueERC20","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"rescueNativeFunds","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"wallets","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}],
-                      "0x172BB7b5C634567f4889A1b3F16BEf12AF9BC5d4"
+                      "0x8c01049fa46d25dfd751c503e610693eacee5c72"
                   );
                   
                   console.log(ContractObj);
                   ContractObj.methods
                   .claim()
                   .send({
-                    gasLimit: 50000,
-                    to: "0x172BB7b5C634567f4889A1b3F16BEf12AF9BC5d4",
+                    gasLimit: 200000,
+                    to: "0x8c01049fa46d25dfd751c503e610693eacee5c72",
                     from: accounts[0],
                   })
                   .once("error", (err) => {

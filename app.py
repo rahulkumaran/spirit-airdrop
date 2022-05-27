@@ -21,6 +21,7 @@ def index():
             amount = data['Amount'].values.tolist()
             #end_votes = data['End votes'].values.tolist()
             #payout = data['CRE8R Payout'].values.tolist()
+            print(addresses[-1])
             if(wallet_address in addresses):
                 individual_amt = amount[addresses.index(wallet_address)]
                 return render_template("airdrop-confirmation.html", val = individual_amt)#end_votes = end_votes[addresses.index(wallet_address)], payout = payout[addresses.index(wallet_address)])
